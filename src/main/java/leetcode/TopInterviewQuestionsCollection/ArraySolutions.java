@@ -1,12 +1,17 @@
 package leetcode.TopInterviewQuestionsCollection;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 class ArraySolutions {
     /**
-     * REMOVE DUPLICATES FROM SORTED ARRAY
+     * Name: Remove duplicates from sorted Array
      * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/727/
-     * Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+     * Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once.
+     * The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
      * Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
-     * Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+     * Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially.
+     * The remaining elements of nums are not important as well as the size of nums.
      * Return k.
      * EXAMPLE:
      * Input: nums = [1,1,2]
@@ -30,10 +35,11 @@ class ArraySolutions {
     }
 
     /**
-     * Best Time to Buy and Sell Stock II
+     * Name: Best Time to Buy and Sell Stock II
      * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/564/
      * You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
-     * On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+     * On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time.
+     * However, you can buy it then immediately sell it on the same day.
      * Find and return the maximum profit you can achieve.
      * EXAMPLE:
      * Input: prices = [7,1,5,3,6,4]
@@ -63,4 +69,75 @@ class ArraySolutions {
         }
         return total;
     }
+
+    /**
+     * Name: Contains Duplicate
+     * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/578/
+     * Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+     */
+    public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums); //sort it first using Arrays package
+        for(int i = 0; i < nums.length - 1; i++){
+            if(nums[i] == nums[i+1]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Name: Single Number
+     * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/549/
+     * Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+     * You must implement a solution with a linear runtime complexity and use only constant extra space.
+     * Example:
+     * Input: nums = [4,1,2,1,2]
+     * Output: 4
+     */
+    public int singleNumber(int[] nums) {
+        Arrays.sort(nums);
+        for(int i = 0; i < nums.length - 1; i+=2){
+            if(!(nums[i] == nums[i+1])){
+                return nums[i];
+            }
+        }
+        return nums[nums.length - 1];
+    }
+
+    /**
+     * Name: Intersection of Two Arrays
+     * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/674/
+     * @Given two integer arrays nums1 and nums2, return an array of their intersection.
+     * Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+     * Example:
+     * Input: nums1 = [1,2,2,1], nums2 = [2,2]
+     * Output: [2,2]
+     */
+    public int[] intersect(int[] nums1, int[] nums2) {
+        int[] shorter = nums1.length < nums2.length ? nums1 : nums2;
+        int[] longer = nums1.length < nums2.length ? nums2 : nums1;
+        int index = 0;
+        //traverse shorter Array
+        for(int i = 0; i < shorter.length; i++){
+            //traverse longer Array
+            for(int j = index; j < longer.length; j++){
+                //if match then move number to left of longer index and increase index
+                //in next iteration ommit numbers that were 'put on side' (left)
+                if(shorter[i] == longer[j]){
+                    int temp = longer[index];
+                    longer[index] = longer[j];
+                    longer[j] = temp;
+                    index++;
+                    break;
+                }
+            }
+        }
+        //construct result Array
+        int[] result = new int[index];
+        for(int z = 0; z < index; z++){
+            result[z] = longer[z];
+        }
+        return result;
+    }
 }
+
