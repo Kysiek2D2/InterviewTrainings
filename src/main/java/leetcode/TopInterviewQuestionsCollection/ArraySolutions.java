@@ -3,6 +3,7 @@ package leetcode.TopInterviewQuestionsCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 class ArraySolutions {
     /**
@@ -181,6 +182,59 @@ class ArraySolutions {
             }
             return result;
         }
+    }
+
+    /**
+     * Name: Move Zeroes
+     * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/567/
+     * Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+     * Note that you must do this in-place without making a copy of the array.
+     * Example:
+     * Input: nums = [0,1,0,3,12]
+     * Output: [1,3,12,0,0]
+     */
+    public void moveZeroes(int[] nums) {
+        int lastZeroIndex = nums.length - 1;
+        int i = 0;
+
+        while(i < lastZeroIndex){
+            if(nums[i] == 0){
+                for(int j = i; j < lastZeroIndex; j++){
+                    nums[j] = nums[j + 1];
+                    nums[j + 1] = 0;
+                }
+                lastZeroIndex--;
+            }
+            if(nums[i] != 0){
+                i++;
+            }
+        }
+    }
+
+    /**
+     * Name: Two Sum
+     * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/546/
+     * Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+     * You may assume that each input would have exactly one solution, and you may not use the same element twice.
+     * You can return the answer in any order.
+     * Example:
+     * Input: nums = [3,2,4], target = 6
+     * Output: [1,2]
+     */
+    public int[] twoSum(int[] nums, int target) {
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[i] + nums[j] == target){
+                    return new int[]{i,j};
+                }
+            }
+        }
+        return new int[1];
+    }
+
+    public boolean isValidSudoku(char[][] board) {
+        var a = Arrays.stream(new int[]{1,2,3}).distinct().toArray();
+        return false;
     }
 }
 
